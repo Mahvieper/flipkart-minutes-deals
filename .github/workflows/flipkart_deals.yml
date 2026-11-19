@@ -60,7 +60,8 @@ jobs:
           MIN_DISCOUNT: ${{ github.event.client_payload.min_discount || inputs.min_discount || secrets.MIN_DISCOUNT || '65' }}
           FLIPKART_COOKIE: ${{ secrets.FLIPKART_COOKIE }}
           DRY_RUN: ${{ inputs.dry_run || 'false' }}
-          MAX_WORKERS: '5'
+          MAX_WORKERS: '3'
+          MAX_PAGES: '2'
         run: |
           python -m bot.main
 
