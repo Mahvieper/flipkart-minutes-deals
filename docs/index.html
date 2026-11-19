@@ -548,8 +548,9 @@ async function saveSchedule(){
     workflowSha = wf.sha;
     let text = b64decode(wf.content);
     const cron = $('s_cron_out').textContent.trim();
-    const updated = text.replace(/(- cron:\s*)'[^']*'/, "$1'"+cron+"'");
-    if(updated===text) throw new Error('Could not find cron line in workflow');
+    const cronRe = /(- cron:\s*)'[^']*'/;
+    if(!cronRe.test(text)) throw new Error('Could not find cron line in workflow');
+    const updated = text.replace(cronRe, "$1'"+cron+"'");
     await gh(repoPath()+'/contents/.github/workflows/flipkart_deals.yml', {
       method:'PUT',
       body:{message:'Set schedule from control panel: '+cron, content:b64encode(updated), sha:workflowSha, branch:'main'}
