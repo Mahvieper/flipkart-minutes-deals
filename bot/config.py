@@ -1,28 +1,74 @@
 import os
 
+# Load secrets from a local .env file at the repo root (no external dependency).
+_ENV_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env")
+if os.path.isfile(_ENV_PATH):
+    try:
+        with open(_ENV_PATH, "r", encoding="utf-8") as _fh:
+            for _line in _fh:
+                _line = _line.strip()
+                if _line and not _line.startswith("#") and "=" in _line:
+                    _key, _val = _line.split("=", 1)
+                    os.environ[_key.strip()] = _val.strip().strip('"').strip("'")
+    except Exception:
+        pass
+
+# Load the web-editable settings file (single source of truth for bot behaviour).
+# Credentials (token, chat id, cookie) always come from env/secrets, never this file.
+import json as _json
+
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_SETTINGS_PATH = os.path.join(_ROOT, "config", "settings.json")
+_settings = {}
+if os.path.isfile(_SETTINGS_PATH):
+    try:
+        with open(_SETTINGS_PATH, "r", encoding="utf-8") as _fh:
+            _settings = _json.load(_fh)
+    except Exception:
+        _settings = {}
+
+
+def _setting(key, default):
+    return _settings.get(key, default)
+
+
+def _as_bool(value, default=False):
+    if value is None:
+        return default
+    if isinstance(value, bool):
+        return value
+    return str(value).strip().lower() in ("true", "1", "yes", "on")
+
+
 # Telegram Configuration
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "").strip()
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "").strip()
 
-# Deal Filters & Settings
-DEFAULT_PINCODE = os.getenv("PINCODE", "560045").strip()
+# Deal Filters & Settings (settings.json overrides env vars; secrets stay in env)
+DEFAULT_PINCODE = str(_setting("pincode", os.getenv("PINCODE", "560045"))).strip()
 FLIPKART_COOKIE = os.getenv("FLIPKART_COOKIE", "").strip()
-DEFAULT_MIN_DISCOUNT = int(os.getenv("MIN_DISCOUNT", "65"))
+DEFAULT_MIN_DISCOUNT = int(_setting("min_discount", os.getenv("MIN_DISCOUNT", "65")))
 MIN_DISCOUNT = DEFAULT_MIN_DISCOUNT
-MAX_WORKERS = int(os.getenv("MAX_WORKERS", "5"))
-DEFAULT_MAX_PAGES = int(os.getenv("MAX_PAGES", "2"))
+MAX_WORKERS = int(_setting("max_workers", os.getenv("MAX_WORKERS", "5")))
+DEFAULT_MAX_PAGES = int(_setting("max_pages", os.getenv("MAX_PAGES", "2")))
 MAX_PAGES = DEFAULT_MAX_PAGES
 CACHE_FILE = os.getenv("CACHE_FILE", os.path.join("data", "posted_deals.json"))
-DRY_RUN = os.getenv("DRY_RUN", "false").lower() in ("true", "1", "yes")
+DRY_RUN = _as_bool(_settings.get("dry_run", os.getenv("DRY_RUN", "false")))
+
+# Alert frequency & dedup
+DEAL_COOLDOWN_DAYS = int(_setting("deal_cooldown_days", 30))
+CACHE_RETENTION_DAYS = int(_setting("cache_retention_days", 60))
+TELEGRAM_MAX_CHARS = int(_setting("telegram_max_chars", 3800))
+BOT_ENABLED = _as_bool(_settings.get("enabled", True), True)
 
 # Price Error & Loot Glitch Configuration
-ENABLE_PRICE_ERROR_SCAN = os.getenv("ENABLE_PRICE_ERROR_SCAN", "true").lower() in ("true", "1", "yes")
-PRICE_ERROR_MAX_FSP = int(os.getenv("PRICE_ERROR_MAX_FSP", "4"))  # Catches items < Rs 5 (Rs 1 - Rs 4) without Parle-G/Dairy Milk false positives
+ENABLE_PRICE_ERROR_SCAN = _as_bool(_settings.get("enable_price_error_scan", os.getenv("ENABLE_PRICE_ERROR_SCAN", "true")))
+PRICE_ERROR_MAX_FSP = int(_setting("price_error_max_fsp", os.getenv("PRICE_ERROR_MAX_FSP", "4")))  # items < Rs 5
 
 # HTTP & API Headers
-ROME_API_URL = "https://1.rome.api.flipkart.com/api/4/page/fetch?cacheFirst=false"
-USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-X_USER_AGENT = "Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Edg/153.0.0.0 Mobile Safari/537.36 FKUA/msite/0.0.4/msite/Mobile"
+ROME_API_URL = str(_setting("rome_api_url", "https://1.rome.api.flipkart.com/api/4/page/fetch?cacheFirst=false"))
+USER_AGENT = str(_setting("user_agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"))
+X_USER_AGENT = str(_setting("x_user_agent", "Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Edg/153.0.0.0 Mobile Safari/537.36 FKUA/msite/0.0.4/msite/Mobile"))
 
 DEFAULT_HEADERS = {
     "accept": "*/*",
@@ -39,7 +85,7 @@ DEFAULT_HEADERS = {
 # Dynamic Discount Threshold Configuration (Hierarchical Rule Engine)
 # -----------------------------------------------------------------------------
 # 1. Category-specific threshold overrides (percentage)
-CATEGORY_THRESHOLDS = {
+_DEFAULT_CATEGORY_THRESHOLDS = {
     "Fruits and Vegetables": 90,
     "Fresh Vegetables": 90,
     "Fresh Fruits": 90,
@@ -48,7 +94,7 @@ CATEGORY_THRESHOLDS = {
 
 # 2. Brand-specific threshold overrides (percentage)
 # Lowercase keys for case-insensitive matching
-BRAND_THRESHOLDS = {
+_DEFAULT_BRAND_THRESHOLDS = {
     # --- 95% Gated Brands (Severe MRP inflation) ---
     "j k international": 95,
     "jk international": 95,
@@ -99,7 +145,7 @@ BRAND_THRESHOLDS = {
 
 # 3. Keyword / Substring threshold overrides: list of (keyword_phrase, threshold_pct)
 # Ready for user to easily customize specific items (e.g. Cadbury 50%, Cooking Oil 40%, Olive/Pomace Oil 85%)
-KEYWORD_THRESHOLDS = [
+_DEFAULT_KEYWORD_THRESHOLDS = [
     # ("cadbury", 50),
     # ("cooking oil", 40),
     # ("olive oil", 85),
@@ -110,7 +156,7 @@ KEYWORD_THRESHOLDS = [
 # Blacklist & Negative Filtering (Strict exclusions)
 # -----------------------------------------------------------------------------
 # Keywords in title that cause deal to be completely dropped
-EXCLUDED_KEYWORDS = [
+_DEFAULT_EXCLUDED_KEYWORDS = [
     # Mobile accessories & covers
     "back cover", "case cover", "phone cover", "mobile cover", "phone case",
     "mobile case", "mobile pouch", "phone pouch", "tempered glass", "screen protector",
@@ -125,7 +171,7 @@ EXCLUDED_KEYWORDS = [
 ]
 
 # Excluded brands (case-insensitive check against title start/by brand)
-EXCLUDED_BRANDS = [
+_DEFAULT_EXCLUDED_BRANDS = [
     "100percent", "abt", "adofys", "aircase",
     "amazer", "amzer", "annprash", "artistique",
     "casotec", "cease", "cedo xpro", "cover alive",
@@ -144,7 +190,7 @@ EXCLUDED_BRANDS = [
 # -----------------------------------------------------------------------------
 # 63 Clean Solr Grocery & Minutes Categories (Direct Solr Facets)
 # -----------------------------------------------------------------------------
-CATEGORIES = [
+_DEFAULT_CATEGORIES = [
     {
         "name": "⚡ Price Errors & ₹1-₹4 Loot",
         "uri": "/hyperlocal/pr?sid=73z&marketplace=HYPERLOCAL&sort=price_asc",
@@ -403,3 +449,37 @@ CATEGORIES = [
         "uri": "/hyperlocal/hloc/4901/pr?sid=hloc%2F0049%2F4901&marketplace=HYPERLOCAL&sort=discount"
     }
 ]
+
+
+# -----------------------------------------------------------------------------
+# Apply web-editable overrides from config/settings.json
+# -----------------------------------------------------------------------------
+CATEGORY_THRESHOLDS = _setting("category_thresholds", _DEFAULT_CATEGORY_THRESHOLDS)
+BRAND_THRESHOLDS = _setting("brand_thresholds", _DEFAULT_BRAND_THRESHOLDS)
+
+_keyword_cfg = _settings.get("keyword_thresholds", None)
+if _keyword_cfg is None:
+    KEYWORD_THRESHOLDS = _DEFAULT_KEYWORD_THRESHOLDS
+else:
+    KEYWORD_THRESHOLDS = []
+    for entry in _keyword_cfg:
+        if isinstance(entry, dict):
+            kw = str(entry.get("keyword", "")).strip()
+            if kw:
+                KEYWORD_THRESHOLDS.append((kw, int(entry.get("threshold", 65))))
+        elif isinstance(entry, (list, tuple)) and len(entry) == 2:
+            KEYWORD_THRESHOLDS.append((str(entry[0]), int(entry[1])))
+
+EXCLUDED_KEYWORDS = _setting("excluded_keywords", _DEFAULT_EXCLUDED_KEYWORDS)
+EXCLUDED_BRANDS = _setting("excluded_brands", _DEFAULT_EXCLUDED_BRANDS)
+
+_categories_cfg = _settings.get("categories", None)
+if _categories_cfg is None:
+    CATEGORIES = _DEFAULT_CATEGORIES
+else:
+    CATEGORIES = [c for c in _categories_cfg if c.get("enabled", True) and c.get("uri")]
+    # Per-category threshold overrides from the web panel
+    for _cat in CATEGORIES:
+        _thr = _cat.get("threshold")
+        if _thr is not None:
+            CATEGORY_THRESHOLDS[_cat["name"]] = int(_thr)

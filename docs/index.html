@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flipkart Minutes Bot — Control Panel</title>
+<script src="https://cdn.jsdelivr.net/gh/jedisct1/libsodium.js@0.7.15/dist/browsers/sodium.js"></script>
+<style>
+  :root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2230;--line:#30363d;--txt:#e6edf3;--muted:#8b949e;--acc:#f0883e;--acc2:#2f81f7;--ok:#3fb950;--err:#f85149}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  header{padding:14px 20px;background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+  h1{margin:0 0 4px;font-size:18px;color:var(--acc)}
+  .sub{color:var(--muted);font-size:12px}
+  .bar{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+  input,select,textarea,button{font:inherit}
+  input[type=text],input[type=number],input[type=password],select,textarea{background:var(--panel2);border:1px solid var(--line);color:var(--txt);border-radius:6px;padding:7px 9px;outline:none}
+  input:focus,select:focus,textarea:focus{border-color:var(--acc2)}
+  input[type=checkbox]{accent-color:var(--acc);width:16px;height:16px}
+  button{background:var(--panel2);border:1px solid var(--line);color:var(--txt);border-radius:6px;padding:7px 12px;cursor:pointer}
+  button:hover{border-color:var(--acc)}
+  button.primary{background:var(--acc);border-color:var(--acc);color:#1b1206;font-weight:700}
+  button.danger{color:var(--err)}
+  button.small{padding:3px 8px;font-size:12px}
+  .tokenbox{flex:1;min-width:220px}
+  .tabs{display:flex;flex-wrap:wrap;gap:4px;padding:10px 20px 0;border-bottom:1px solid var(--line);background:var(--panel)}
+  .tab{padding:8px 13px;cursor:pointer;border:1px solid transparent;border-bottom:none;border-radius:6px 6px 0 0;color:var(--muted)}
+  .tab.active{background:var(--bg);color:var(--acc);border-color:var(--line)}
+  main{padding:20px;max-width:1180px;margin:0 auto}
+  section{display:none}
+  section.active{display:block}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;margin-bottom:16px}
+  .card h2{margin:0 0 12px;font-size:15px;color:var(--acc)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+  label.fld{display:block}
+  label.fld span{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}
+  label.fld input,label.fld select{width:100%}
+  .checkline{display:flex;align-items:center;gap:8px;margin:8px 0}
+  .row{display:flex;gap:8px;align-items:center;margin:6px 0;flex-wrap:wrap}
+  .row input[type=text],.row input[type=number]{width:130px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+  th{color:var(--muted);font-size:12px;font-weight:600;position:sticky;top:0;background:var(--panel)}
+  td input[type=text],td input[type=number]{width:100%}
+  .scroll{max-height:520px;overflow:auto;border:1px solid var(--line);border-radius:6px}
+  .muted{color:var(--muted);font-size:12px}
+  .mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px}
+  textarea{width:100%;min-height:150px;resize:vertical}
+  #status{margin-top:10px;font-size:13px;min-height:20px}
+  .ok{color:var(--ok)}.err{color:var(--err)}
+  .cronbox{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:10px;margin-top:10px}
+  .pill{display:inline-block;background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:2px 10px;font-size:12px;margin:2px}
+  a{color:var(--acc2)}
+  .warn{background:#2b1d0e;border:1px solid #6b4a1c;color:#e3b341;padding:10px;border-radius:6px;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>⚡ Flipkart Minutes Bot — Control Panel</h1>
+  <div class="sub">Hosted from <span class="mono">docs/index.html</span> on GitHub Pages · edits are committed straight to your fork</div>
+  <div class="bar">
+    <input class="tokenbox" id="token" type="password" placeholder="GitHub PAT (repo + workflow, or fine-grained Contents/Secrets/Actions)">
+    <input id="owner" type="text" value="Mahvieper" style="width:130px" title="GitHub username">
+    <input id="repo" type="text" value="flipkart-minutes-deals" style="width:190px" title="Repository name">
+    <button class="primary" onclick="loadAll()">Load Settings</button>
+    <button onclick="saveSettings()">Save Settings</button>
+    <button onclick="testRun()">▶ Test Run</button>
+  </div>
+  <div id="status"></div>
+</header>
+
+<div class="tabs">
+  <div class="tab active" data-t="general">General</div>
+  <div class="tab" data-t="categories">Categories</div>
+  <div class="tab" data-t="thresholds">Thresholds</div>
+  <div class="tab" data-t="filters">Filters</div>
+  <div class="tab" data-t="schedule">Schedule</div>
+  <div class="tab" data-t="secrets">Secrets</div>
+  <div class="tab" data-t="advanced">Advanced</div>
+</div>
+
+<main>
+<!-- GENERAL -->
+<section id="general" class="active">
+  <div class="card">
+    <h2>Core behaviour</h2>
+    <div class="grid">
+      <label class="fld"><span>Delivery pincode</span><input id="g_pincode" type="text"></label>
+      <label class="fld"><span>Minimum discount % (global)</span><input id="g_min_discount" type="number" min="0" max="99"></label>
+      <label class="fld"><span>Concurrent workers</span><input id="g_max_workers" type="number" min="1" max="10"></label>
+      <label class="fld"><span>Pages per category</span><input id="g_max_pages" type="number" min="1" max="5"></label>
+      <label class="fld"><span>Deal cooldown (days)</span><input id="g_deal_cooldown_days" type="number" min="1"></label>
+      <label class="fld"><span>Cache retention (days)</span><input id="g_cache_retention_days" type="number" min="1"></label>
+      <label class="fld"><span>Max chars per Telegram message</span><input id="g_telegram_max_chars" type="number" min="500" max="4000"></label>
+      <label class="fld"><span>Price-error max FSP (₹)</span><input id="g_price_error_max_fsp" type="number" min="1" max="10"></label>
+    </div>
+    <div class="checkline"><input id="g_enabled" type="checkbox"><label for="g_enabled">Bot enabled (uncheck to pause all runs)</label></div>
+    <div class="checkline"><input id="g_dry_run" type="checkbox"><label for="g_dry_run">Dry run — scan but do NOT send Telegram alerts</label></div>
+    <div class="checkline"><input id="g_enable_price_error_scan" type="checkbox"><label for="g_enable_price_error_scan">Scan for ₹1–₹4 price-error / loot deals</label></div>
+    <button class="primary" onclick="saveSettings()">Save General</button>
+  </div>
+  <div class="card">
+    <h2>How thresholds work</h2>
+    <p class="muted">A deal is alerted only if its discount meets the effective threshold. Priority: keyword override → brand override → category override → global minimum. Price errors (below the ₹ limit) always bypass all thresholds.</p>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section id="categories">
+  <div class="card">
+    <h2>Categories to scan</h2>
+    <div class="row">
+      <input id="cat_search" type="text" placeholder="Search categories..." style="width:250px" oninput="renderCategories()">
+      <button class="small" onclick="setAllCategories(true)">Enable all</button>
+      <button class="small" onclick="setAllCategories(false)">Disable all</button>
+      <button class="small" onclick="addCategory()">+ Add custom category</button>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th style="width:60px">Scan</th><th>Category</th><th style="width:130px">Min discount %</th><th style="width:70px"></th></tr></thead>
+        <tbody id="cat_rows"></tbody>
+      </table>
+    </div>
+    <p class="muted">Leave discount blank to use the global minimum. The URI is the exact Flipkart listing endpoint — most users won't need to change it.</p>
+    <button class="primary" onclick="saveSettings()">Save Categories</button>
+  </div>
+</section>
+
+<!-- THRESHOLDS -->
+<section id="thresholds">
+  <div class="card">
+    <h2>Brand-specific thresholds</h2>
+    <div id="brand_rows"></div>
+    <button class="small" onclick="addRow('brand_rows','brand')">+ Add brand</button>
+  </div>
+  <div class="card">
+    <h2>Keyword-specific thresholds</h2>
+    <div id="keyword_rows"></div>
+    <button class="small" onclick="addRow('keyword_rows','keyword')">+ Add keyword</button>
+  </div>
+  <div class="card">
+    <h2>Category-specific thresholds</h2>
+    <div id="cthresh_rows"></div>
+    <button class="small" onclick="addRow('cthresh_rows','cthresh')">+ Add category rule</button>
+    <p class="muted">Category rules here also override the per-category values set in the Categories tab.</p>
+  </div>
+  <button class="primary" onclick="saveSettings()">Save Thresholds</button>
+</section>
+
+<!-- FILTERS -->
+<section id="filters">
+  <div class="card">
+    <h2>Excluded keywords</h2>
+    <p class="muted">One phrase per line. Any product title containing one of these is dropped.</p>
+    <textarea id="f_excluded_keywords" spellcheck="false"></textarea>
+  </div>
+  <div class="card">
+    <h2>Excluded brands</h2>
+    <p class="muted">One brand per line.</p>
+    <textarea id="f_excluded_brands" spellcheck="false"></textarea>
+  </div>
+  <button class="primary" onclick="saveSettings()">Save Filters</button>
+</section>
+
+<!-- SCHEDULE -->
+<section id="schedule">
+  <div class="card">
+    <h2>When should the bot run?</h2>
+    <div class="row">
+      <label class="fld"><span>Your timezone UTC offset</span>
+        <select id="s_tz" oninput="updateCron()">
+          <option value="-8">UTC−8 (PST)</option><option value="-5">UTC−5 (EST)</option>
+          <option value="0">UTC +0</option><option value="1">UTC+1</option><option value="5.5" selected>IST +5:30</option>
+          <option value="8">SGT +8</option><option value="10">AEST +10</option>
+        </select>
+      </label>
+      <label class="fld"><span>Mode</span>
+        <select id="s_mode" oninput="updateCron()">
+          <option value="every_n">Every N minutes</option>
+          <option value="hourly">Every hour at minute</option>
+          <option value="daily">Once a day</option>
+          <option value="cron">Custom cron (UTC)</option>
+        </select>
+      </label>
+    </div>
+    <div class="row" id="s_every_n">
+      <label class="fld"><span>Every N minutes</span><input id="s_n" type="number" min="5" max="60" value="60" oninput="updateCron()"></label>
+    </div>
+    <div class="row" id="s_hourly" style="display:none">
+      <label class="fld"><span>At minute</span><input id="s_hour_min" type="number" min="0" max="59" value="35" oninput="updateCron()"></label>
+    </div>
+    <div class="row" id="s_daily" style="display:none">
+      <label class="fld"><span>Hour (local)</span><input id="s_daily_h" type="number" min="0" max="23" value="9" oninput="updateCron()"></label>
+      <label class="fld"><span>Minute</span><input id="s_daily_m" type="number" min="0" max="59" value="0" oninput="updateCron()"></label>
+    </div>
+    <div class="row" id="s_cron" style="display:none">
+      <label class="fld"><span>Cron (UTC, 5 fields)</span><input id="s_cron_raw" type="text" class="mono" value="35 0-19 * * *" oninput="updateCron()" style="width:240px"></label>
+    </div>
+    <div class="row">
+      <label class="fld"><span>Active from (local hour, 0–23)</span><input id="s_start_h" type="number" min="0" max="23" value="0" oninput="updateCron()"></label>
+      <label class="fld"><span>Active until (local hour, 0–23)</span><input id="s_end_h" type="number" min="0" max="23" value="23" oninput="updateCron()"></label>
+    </div>
+    <div>
+      <span class="muted">Days of week</span><br>
+      <span id="s_days"></span>
+    </div>
+    <div class="cronbox">
+      <div><span class="muted">Generated GitHub cron (UTC):</span> <span id="s_cron_out" class="mono" style="color:var(--acc)"></span></div>
+      <div id="s_human" class="muted" style="margin-top:6px"></div>
+    </div>
+    <button class="primary" onclick="saveSchedule()" style="margin-top:14px">Save Schedule &amp; Workflow</button>
+    <p class="muted">GitHub Actions cron is always UTC; the panel converts your local hours. Changes are written to both <span class="mono">config/settings.json</span> and the workflow file.</p>
+  </div>
+</section>
+
+<!-- SECRETS -->
+<section id="secrets">
+  <div class="warn">Secrets are stored as encrypted GitHub Actions secrets, never in settings.json. Leave a field blank to keep its current value. The token you enter above needs permission to write secrets.</div>
+  <div class="card">
+    <h2>Telegram &amp; Flipkart credentials</h2>
+    <div class="grid">
+      <label class="fld"><span>Telegram bot token</span><input id="sec_token" type="password" placeholder="leave blank to keep existing"></label>
+      <label class="fld"><span>Telegram chat ID</span><input id="sec_chat" type="text" placeholder="leave blank to keep existing"></label>
+    </div>
+    <label class="fld" style="margin-top:12px"><span>Flipkart cookie (DevTools → 1.rome.api… → Request Headers → Cookie)</span>
+      <textarea id="sec_cookie" placeholder="leave blank to keep existing" spellcheck="false" style="min-height:90px"></textarea>
+    </label>
+    <div class="row" style="margin-top:12px">
+      <button class="primary" onclick="saveSecrets()">Save Secrets</button>
+      <button onclick="checkSecrets()">Check which secrets exist</button>
+    </div>
+    <div id="sec_status" class="muted" style="margin-top:10px"></div>
+  </div>
+</section>
+
+<!-- ADVANCED -->
+<section id="advanced">
+  <div class="card">
+    <h2>Advanced API settings</h2>
+    <div class="grid">
+      <label class="fld"><span>Rome API URL</span><input id="a_rome" type="text" class="mono"></label>
+      <label class="fld"><span>User agent</span><input id="a_ua" type="text" class="mono"></label>
+      <label class="fld"><span>X-user-agent</span><input id="a_xua" type="text" class="mono"></label>
+    </div>
+    <button class="primary" onclick="saveSettings()" style="margin-top:12px">Save Advanced</button>
+  </div>
+  <div class="card">
+    <h2>Backup &amp; restore</h2>
+    <div class="row">
+      <button onclick="exportSettings()">⬇ Export settings.json</button>
+      <input id="import_file" type="file" accept="application/json" onchange="importSettings(this)">
+    </div>
+    <p class="muted">Useful before making big changes. Import does not auto-save — review then click Save Settings.</p>
+  </div>
+  <div class="card">
+    <h2>Links</h2>
+    <div class="row">
+      <a id="link_repo" href="#" target="_blank">Repository</a>
+      <a id="link_actions" href="#" target="_blank">Actions runs</a>
+      <a id="link_settings" href="#" target="_blank">settings.json in repo</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<script>
+/* ---------------- tab / utility helpers ---------------- */
+document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+  document.querySelectorAll('section').forEach(x => x.classList.remove('active'));
+  t.classList.add('active');
+  document.getElementById(t.dataset.t).classList.add('active');
+});
+const $ = id => document.getElementById(id);
+function status(msg, isErr){ $('status').innerHTML = '<span class="'+(isErr?'err':'ok')+'">'+msg+'</span>'; }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function b64decode(s){ const bin = atob(s.replace(/\s/g,'')); return new TextDecoder().decode(Uint8Array.from(bin, c=>c.charCodeAt(0))); }
+function b64encode(s){ const bytes = new TextEncoder().encode(s); return btoa(String.fromCharCode(...bytes)); }
+
+let settings = null, settingsSha = null, workflowSha = null;
+function repoPath(file){ return '/repos/'+$('owner').value.trim()+ '/' +$('repo').value.trim(); }
+function token(){ return $('token').value.trim(); }
+
+async function gh(path, opts){
+  opts = opts || {};
+  const r = await fetch('https://api.github.com'+path, {
+    method: opts.method || 'GET',
+    headers: {
+      'Authorization':'Bearer '+token(),
+      'Accept':'application/vnd.github+json',
+      'X-GitHub-Api-Version':'2022-11-28',
+      ...(opts.headers||{})
+    },
+    body: opts.body ? JSON.stringify(opts.body) : undefined
+  });
+  const txt = await r.text();
+  if(!r.ok) throw new Error('HTTP '+r.status+' '+txt.slice(0,200));
+  try { return JSON.parse(txt); } catch(e){ return txt; }
+}
+
+/* ---------------- load / save ---------------- */
+async function loadAll(){
+  try{
+    localStorage.setItem('fk_gh_token', token());
+    localStorage.setItem('fk_owner', $('owner').value.trim());
+    localStorage.setItem('fk_repo', $('repo').value.trim());
+    status('Loading settings...');
+    const s = await gh(repoPath()+'/contents/config/settings.json');
+    settingsSha = s.sha;
+    settings = JSON.parse(b64decode(s.content));
+    fillForms();
+    updateLinks();
+    status('✅ Settings loaded ('+settings.categories.length+' categories)');
+  }catch(e){ status('❌ '+e.message, true); }
+}
+
+function fillForms(){
+  $('g_pincode').value = settings.pincode || '';
+  $('g_min_discount').value = settings.min_discount ?? 65;
+  $('g_max_workers').value = settings.max_workers ?? 3;
+  $('g_max_pages').value = settings.max_pages ?? 2;
+  $('g_deal_cooldown_days').value = settings.deal_cooldown_days ?? 30;
+  $('g_cache_retention_days').value = settings.cache_retention_days ?? 60;
+  $('g_telegram_max_chars').value = settings.telegram_max_chars ?? 3800;
+  $('g_price_error_max_fsp').value = settings.price_error_max_fsp ?? 4;
+  $('g_enabled').checked = settings.enabled !== false;
+  $('g_dry_run').checked = !!settings.dry_run;
+  $('g_enable_price_error_scan').checked = settings.enable_price_error_scan !== false;
+
+  $('f_excluded_keywords').value = (settings.excluded_keywords||[]).join('\n');
+  $('f_excluded_brands').value = (settings.excluded_brands||[]).join('\n');
+
+  renderCategories();
+  renderRows('brand_rows', Object.entries(settings.brand_thresholds||{}).map(([k,v])=>({a:k,b:v})), 'brand');
+  renderRows('keyword_rows', (settings.keyword_thresholds||[]).map(x=>({a:x.keyword,b:x.threshold})), 'keyword');
+  renderRows('cthresh_rows', Object.entries(settings.category_thresholds||{}).map(([k,v])=>({a:k,b:v})), 'cthresh');
+
+  $('a_rome').value = settings.rome_api_url || '';
+  $('a_ua').value = settings.user_agent || '';
+  $('a_xua').value = settings.x_user_agent || '';
+
+  const sch = settings.schedule || {};
+  $('s_mode').value = sch.mode || 'cron';
+  $('s_tz').value = sch.timezone_offset_hours ?? 5.5;
+  $('s_cron_raw').value = sch.cron || '35 0-19 * * *';
+  $('s_n').value = sch.n ?? 60;
+  $('s_hour_min').value = sch.hour_min ?? 35;
+  $('s_daily_h').value = sch.daily_h ?? 9;
+  $('s_daily_m').value = sch.daily_m ?? 0;
+  $('s_start_h').value = sch.start_h ?? 0;
+  $('s_end_h').value = sch.end_h ?? 23;
+  buildDayChips(sch.days || [0,1,2,3,4,5,6]);
+  toggleMode();
+  updateCron();
+}
+
+function collectForms(){
+  settings.pincode = $('g_pincode').value.trim();
+  settings.min_discount = +$('g_min_discount').value;
+  settings.max_workers = +$('g_max_workers').value;
+  settings.max_pages = +$('g_max_pages').value;
+  settings.deal_cooldown_days = +$('g_deal_cooldown_days').value;
+  settings.cache_retention_days = +$('g_cache_retention_days').value;
+  settings.telegram_max_chars = +$('g_telegram_max_chars').value;
+  settings.price_error_max_fsp = +$('g_price_error_max_fsp').value;
+  settings.enabled = $('g_enabled').checked;
+  settings.dry_run = $('g_dry_run').checked;
+  settings.enable_price_error_scan = $('g_enable_price_error_scan').checked;
+
+  settings.excluded_keywords = lines($('f_excluded_keywords').value);
+  settings.excluded_brands = lines($('f_excluded_brands').value);
+
+  collectCategories();
+
+  settings.brand_thresholds = readRows('brand_rows');
+  settings.keyword_thresholds = Object.entries(readRows('keyword_rows')).map(([keyword,threshold])=>({keyword,threshold:+threshold}));
+  settings.category_thresholds = readRows('cthresh_rows');
+
+  settings.rome_api_url = $('a_rome').value.trim();
+  settings.user_agent = $('a_ua').value.trim();
+  settings.x_user_agent = $('a_xua').value.trim();
+
+  settings.schedule = settings.schedule || {};
+  settings.schedule.mode = $('s_mode').value;
+  settings.schedule.timezone_offset_hours = +$('s_tz').value;
+  settings.schedule.cron = $('s_cron_out').textContent.trim();
+  settings.schedule.days = selectedDays();
+  settings.schedule.n = +$('s_n').value;
+  settings.schedule.hour_min = +$('s_hour_min').value;
+  settings.schedule.daily_h = +$('s_daily_h').value;
+  settings.schedule.daily_m = +$('s_daily_m').value;
+  settings.schedule.start_h = +$('s_start_h').value;
+  settings.schedule.end_h = +$('s_end_h').value;
+}
+function lines(v){ return v.split('\n').map(x=>x.trim()).filter(Boolean); }
+
+async function saveSettings(){
+  try{
+    if(!settings) throw new Error('Click Load Settings first');
+    collectForms();
+    status('Saving settings.json...');
+    const content = b64encode(JSON.stringify(settings,null,2)+'\n');
+    const body = {message:'Update bot settings from control panel', content, branch:'main'};
+    if(settingsSha) body.sha = settingsSha;
+    const res = await gh(repoPath()+'/contents/config/settings.json', {method:'PUT', body});
+    settingsSha = res.content.sha;
+    status('✅ Settings saved — next scheduled run will use them');
+  }catch(e){ status('❌ '+e.message, true); }
+}
+
+/* ---------------- categories ---------------- */
+function renderCategories(){
+  const q = ($('cat_search').value||'').toLowerCase();
+  const cats = (settings&&settings.categories)||[];
+  const html = cats.map((c,i)=>{
+    if(q && !String(c.name).toLowerCase().includes(q) && !String(c.uri).toLowerCase().includes(q)) return '';
+    return '<tr><td><input type="checkbox" data-cat-en="'+i+'" '+(c.enabled!==false?'checked':'')+'></td>'+
+      '<td><input type="text" data-cat-name="'+i+'" value="'+esc(c.name)+'"></td>'+
+      '<td><input type="number" data-cat-thr="'+i+'" placeholder="global" min="0" max="99" value="'+(c.threshold==null?'':c.threshold)+'"></td>'+
+      '<td><button class="small danger" onclick="removeCategory('+i+')">✕</button></td></tr>';
+  }).join('');
+  $('cat_rows').innerHTML = html || '<tr><td colspan="4" class="muted">No categories match.</td></tr>';
+}
+function collectCategories(){
+  const cats = settings.categories||[];
+  cats.forEach((c,i)=>{
+    const en = document.querySelector('[data-cat-en="'+i+'"]');
+    const nm = document.querySelector('[data-cat-name="'+i+'"]');
+    const th = document.querySelector('[data-cat-thr="'+i+'"]');
+    if(en) c.enabled = en.checked;
+    if(nm) c.name = nm.value.trim() || c.name;
+    if(th){ c.threshold = th.value==='' ? null : +th.value; }
+  });
+  settings.categories = cats;
+}
+function setAllCategories(v){
+  document.querySelectorAll('[data-cat-en]').forEach(x=>x.checked=v);
+}
+function removeCategory(i){
+  collectCategories();
+  settings.categories.splice(i,1);
+  renderCategories();
+}
+function addCategory(){
+  const name = prompt('Category display name:');
+  if(!name) return;
+  const uri = prompt('Flipkart listing URI (starts with /grocery/... or /hyperlocal/...):', '/hyperlocal/pr?sid=hloc&marketplace=HYPERLOCAL&sort=discount');
+  if(!uri) return;
+  collectCategories();
+  settings.categories.push({name, uri, enabled:true, threshold:null});
+  renderCategories();
+}
+
+/* ---------------- threshold / row tables ---------------- */
+function renderRows(containerId, rows, kind){
+  const labels = {brand:['Brand','Threshold %'], keyword:['Keyword','Threshold %'], cthresh:['Category','Threshold %']};
+  const [l1,l2] = labels[kind];
+  let html = '<table><thead><tr><th>'+l1+'</th><th style="width:130px">'+l2+'</th><th style="width:50px"></th></tr></thead><tbody>';
+  rows.forEach((r,i)=>{
+    html += '<tr><td><input type="text" data-r="'+containerId+'-'+i+'-a" value="'+esc(r.a)+'"></td>'+
+            '<td><input type="number" data-r="'+containerId+'-'+i+'-b" value="'+esc(r.b)+'" min="0" max="99"></td>'+
+            '<td><button class="small danger" onclick="delRow(\''+containerId+'\','+i+',\''+kind+'\')">✕</button></td></tr>';
+  });
+  $(''+containerId).innerHTML = html+'</tbody></table>';
+}
+function addRow(containerId, kind){
+  const rows = readRows(containerId);
+  rows['new_'+Date.now()] = 65;
+  const arr = Object.entries(rows).map(([k,v])=>({a:k,b:v}));
+  renderRows(containerId, arr, kind);
+}
+function delRow(containerId, i, kind){
+  const arr = Object.entries(readRows(containerId)).map(([k,v])=>({a:k,b:v}));
+  arr.splice(i,1);
+  renderRows(containerId, arr, kind);
+}
+function readRows(containerId){
+  const out = {};
+  document.querySelectorAll('[data-r^="'+containerId+'-"]').forEach(el=>{
+    const parts = el.dataset.r.split('-');
+    const i = parts[1], side = parts[2];
+    out[i] = out[i]||{};
+    out[i][side] = el.value.trim();
+  });
+  const res = {};
+  Object.values(out).forEach(v=>{ if(v.a) res[v.a] = +v.b || 0; });
+  return res;
+}
+
+/* ---------------- schedule ---------------- */
+function buildDayChips(sel){
+  const names=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  $('s_days').innerHTML = names.map((n,i)=>'<label class="pill"><input type="checkbox" class="sday" value="'+i+'" '+(sel.includes(i)?'checked':'')+'> '+n+'</label>').join(' ');
+  document.querySelectorAll('.sday').forEach(x=>x.onchange=updateCron);
+}
+function selectedDays(){ return [...document.querySelectorAll('.sday:checked')].map(x=>+x.value); }
+function toggleMode(){
+  const m=$('s_mode').value;
+  $('s_every_n').style.display = m==='every_n'?'flex':'none';
+  $('s_hourly').style.display  = m==='hourly'?'flex':'none';
+  $('s_daily').style.display   = m==='daily'?'flex':'none';
+  $('s_cron').style.display    = m==='cron'?'flex':'none';
+}
+document.querySelectorAll('#s_mode').forEach(x=>x.oninput=()=>{toggleMode();updateCron();});
+
+function updateCron(){
+  toggleMode();
+  const mode=$('s_mode').value;
+  const tz=+$('s_tz').value;
+  const days=selectedDays();
+  const dayField = days.length===7 ? '*' : (days.length===0?'*':days.join(','));
+  const start=+$('s_start_h').value, end=+$('s_end_h').value;
+  // Convert local active hours to WHOLE UTC hours (floor so 5:30 offsets stay valid).
+  const utcStart=Math.floor(((start-tz)%24+24)%24);
+  const utcEnd=Math.floor(((end+1-tz)%24+24)%24);
+  const hourField = utcStart===0 && utcEnd===23 ? '*' : (utcStart<=utcEnd ? utcStart+'-'+utcEnd : utcStart+'-23,0-'+utcEnd);
+  let cron, human;
+  if(mode==='every_n'){
+    const n=Math.max(5,Math.min(60,+$('s_n').value||60));
+    cron='*/'+n+' '+hourField+' * * '+dayField;
+    human='Every '+n+' minutes, local hours '+start+':00–'+end+':59';
+  }else if(mode==='hourly'){
+    const m=Math.max(0,Math.min(59,+$('s_hour_min').value||35));
+    // Local minute == UTC minute when offset is whole hours; for +5:30 add 30.
+    const utcMin=(((m - (tz%1)*60)%60)+60)%60;
+    cron=utcMin+' '+hourField+' * * '+dayField;
+    human='Hourly at local minute '+m+', hours '+start+'–'+end;
+  }else if(mode==='daily'){
+    const h=+$('s_daily_h').value, m=+$('s_daily_m').value;
+    const total=((h*60+m - tz*60)%1440+1440)%1440;
+    cron=(total%60)+' '+Math.floor(total/60)+' * * '+dayField;
+    human='Daily at local '+h+':'+String(m).padStart(2,'0');
+  }else{
+    cron=$('s_cron_raw').value.trim();
+    human='Custom cron (UTC). Use crontab.guru to verify.';
+  }
+  $('s_cron_out').textContent=cron;
+  $('s_human').textContent=human+' · GitHub UTC: '+cron;
+}
+
+async function saveSchedule(){
+  try{
+    if(!settings) throw new Error('Click Load Settings first');
+    updateCron();
+    await saveSettings();
+    status('Updating workflow cron...');
+    const wf = await gh(repoPath()+'/contents/.github/workflows/flipkart_deals.yml');
+    workflowSha = wf.sha;
+    let text = b64decode(wf.content);
+    const cron = $('s_cron_out').textContent.trim();
+    const updated = text.replace(/(- cron:\s*)'[^']*'/, "$1'"+cron+"'");
+    if(updated===text) throw new Error('Could not find cron line in workflow');
+    await gh(repoPath()+'/contents/.github/workflows/flipkart_deals.yml', {
+      method:'PUT',
+      body:{message:'Set schedule from control panel: '+cron, content:b64encode(updated), sha:workflowSha, branch:'main'}
+    });
+    status('✅ Schedule saved: cron '+cron+' (takes effect on next run)');
+  }catch(e){ status('❌ '+e.message, true); }
+}
+
+/* ---------------- secrets ---------------- */
+async function encryptSecret(pubB64, value){
+  // GitHub secrets use a libsodium sealed box (ephemeral X25519 key + derived nonce).
+  await sodium.ready;
+  const pub = sodium.from_base64(pubB64, sodium.base64_variants.ORIGINAL);
+  const sealed = sodium.crypto_box_seal(sodium.from_string(value), pub);
+  return sodium.to_base64(sealed, sodium.base64_variants.ORIGINAL);
+}
+async function checkSecrets(){
+  try{
+    const d = await gh(repoPath()+'/actions/secrets');
+    const names=(d.secrets||[]).map(x=>x.name);
+    $('sec_status').innerHTML = names.length ? 'Configured: '+names.map(n=>'<span class="pill">'+esc(n)+'</span>').join(' ') : 'No secrets found.';
+  }catch(e){ $('sec_status').textContent='❌ '+e.message; }
+}
+async function saveSecrets(){
+  try{
+    const p = await gh(repoPath()+'/actions/secrets/public-key');
+    const pub=p.key, kid=p.key_id;
+    const values={
+      TELEGRAM_BOT_TOKEN:$('sec_token').value.trim(),
+      TELEGRAM_CHAT_ID:$('sec_chat').value.trim(),
+      FLIPKART_COOKIE:$('sec_cookie').value.trim()
+    };
+    let n=0;
+    for(const [name,val] of Object.entries(values)){
+      if(!val) continue;
+      await gh(repoPath()+'/actions/secrets/'+name, {method:'PUT', body:{encrypted_value:await encryptSecret(pub,val), key_id:kid}});
+      n++;
+    }
+    $('sec_token').value=''; $('sec_cookie').value='';
+    $('sec_status').textContent = n ? '✅ Updated '+n+' secret(s)' : 'Nothing entered — no changes made.';
+  }catch(e){ $('sec_status').textContent='❌ '+e.message; }
+}
+
+/* ---------------- run / backup / links ---------------- */
+async function testRun(){
+  try{
+    status('Dispatching test run...');
+    await gh(repoPath()+'/actions/workflows/flipkart_deals.yml/dispatches', {
+      method:'POST', body:{ref:'main', inputs:{pincode:settings?settings.pincode:'422010', min_discount:'65', dry_run:'false'}}
+    });
+    status('✅ Test run dispatched — <a href="'+actionsUrl()+'" target="_blank">watch it here</a>');
+  }catch(e){ status('❌ '+e.message, true); }
+}
+function exportSettings(){
+  const blob=new Blob([JSON.stringify(settings,null,2)+'\n'],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='flipkart-settings-backup.json'; a.click();
+}
+function importSettings(input){
+  const f=input.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{ try{ settings=JSON.parse(r.result); fillForms(); status('✅ Imported — review then click Save Settings'); }catch(e){ status('❌ Invalid JSON',true); } };
+  r.readAsText(f);
+}
+function actionsUrl(){ return 'https://github.com/'+$('owner').value.trim()+'/'+$('repo').value.trim()+'/actions'; }
+function updateLinks(){
+  const base='https://github.com/'+$('owner').value.trim()+'/'+$('repo').value.trim();
+  $('link_repo').href=base;
+  $('link_actions').href=base+'/actions';
+  $('link_settings').href=base+'/blob/main/config/settings.json';
+}
+
+/* boot */
+(function(){
+  const t=localStorage.getItem('fk_gh_token'); if(t) $('token').value=t;
+  const o=localStorage.getItem('fk_owner'); if(o) $('owner').value=o;
+  const r=localStorage.getItem('fk_repo'); if(r) $('repo').value=r;
+  updateLinks();
+  buildDayChips([0,1,2,3,4,5,6]);
+  toggleMode();
+  updateCron();
+})();
+</script>
+</body>
+</html>

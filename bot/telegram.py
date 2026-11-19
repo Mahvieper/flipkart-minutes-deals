@@ -47,7 +47,9 @@ class TelegramNotifier:
         """Single deal format for backward compatibility."""
         return self.format_deal_entry(deal)
 
-    def send_combined_deals(self, deals, max_chars_per_message=3800):
+    def send_combined_deals(self, deals, max_chars_per_message=None):
+        if max_chars_per_message is None:
+            max_chars_per_message = int(getattr(config, "TELEGRAM_MAX_CHARS", 3800))
         """
         Combines multiple deals into a single message (or chunked messages if > 3800 chars).
         Returns the list of successfully sent deals.

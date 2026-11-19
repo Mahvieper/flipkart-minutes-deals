@@ -20,8 +20,8 @@ from .telegram import TelegramNotifier
 # Indian Standard Time (UTC+5:30)
 IST = timezone(timedelta(hours=5, minutes=30))
 
-# 30-day cooldown for unchanging prices (items with unchanging price alert at most once a month, never twice in same day)
-COOLDOWN_SECONDS = 30 * 24 * 3600
+# Cooldown for unchanging prices (web-configurable in config/settings.json)
+COOLDOWN_SECONDS = int(getattr(config, "DEAL_COOLDOWN_DAYS", 30)) * 24 * 3600
 
 def get_deal_key(deal):
     """
@@ -63,7 +63,7 @@ def save_cache(cache, cache_path):
     if cache_dir:
         os.makedirs(cache_dir, exist_ok=True)
     now = time.time()
-    retention_period = 60 * 24 * 3600  # 60 days retention to preserve 30-day cooldown history
+    retention_period = int(getattr(config, "CACHE_RETENTION_DAYS", 60)) * 24 * 3600  # preserve cooldown history
 
     pruned = {}
     for key, record in cache.items():
@@ -192,6 +192,10 @@ def main():
     parser.add_argument("--max-pages", type=int, default=config.DEFAULT_MAX_PAGES, help="Maximum pages to scan per category (default: 2)")
     parser.add_argument("--cache", default=config.CACHE_FILE, help="Path to cache JSON file")
     args = parser.parse_args()
+
+    if not getattr(config, "BOT_ENABLED", True):
+        print("⏸️ Bot is disabled in config/settings.json — nothing to do.")
+        return
 
     start_time = time.time()
     ist_now = datetime.now(IST)
