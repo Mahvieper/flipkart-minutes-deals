@@ -160,259 +160,387 @@
     {
       "name": "⚡ Price Errors & ₹1-₹4 Loot",
       "uri": "/hyperlocal/pr?sid=73z&marketplace=HYPERLOCAL&sort=price_asc",
-      "is_price_error_scan": true
+      "is_price_error_scan": true,
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Staples › Dal & Pulses",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/3uv/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/3uv/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Staples › Ghee and Oils",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/4wu/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/4wu/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Staples › Atta and Flours",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/9da/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/9da/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Staples › Masala and Spices",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/a6m/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/a6m/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Staples › Rice and Rice Products",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/zwp/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/zwp/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Staples › Dry Fruits, Nuts & Seeds",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/dtp/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/dtp/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Staples › Sugar, Jaggery & Salt",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/fdl/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/bpe&p[]=facets.category[]=73z/bpe/fdl/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Tea & Coffee › Tea",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/amr/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/amr/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Tea & Coffee › Coffee",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/t7k/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/t7k/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Tea & Coffee › Nutritional & Health Drink Mix",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/vnq/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/vnq/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Cold Drinks & Juices › Soft Drinks & Sodas",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/dfw/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/dfw/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Cold Drinks & Juices › Fruit Juices",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/afd/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/afd/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Cold Drinks & Juices › Instant Drink Mixes, Squash & Syrups",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/iau/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/iau/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Cold Drinks & Juices › Water",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/wsx/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/wsx/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Snacks & Munchies › Biscuits & Cookies",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/eb9/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/eb9/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Snacks & Munchies › Chips, Namkeen and Snacks",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/dd9/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/ujs&p[]=facets.category[]=73z/ujs/dd9/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Dairy, Bakery and Eggs › Dairy",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/esa&p[]=facets.category[]=73z/esa/dt6/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/esa&p[]=facets.category[]=73z/esa/dt6/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Dairy, Bakery and Eggs › Eggs",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/esa&p[]=facets.category[]=73z/esa/hh7/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/esa&p[]=facets.category[]=73z/esa/hh7/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Dairy, Bakery and Eggs › Bakery Sweets and Namkeen",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/esa&p[]=facets.category[]=73z/esa/93l/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/esa&p[]=facets.category[]=73z/esa/93l/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Packaged Goods › Noodles and Pasta",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/ltz/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/ltz/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Packaged Goods › Chocolates and Sweets",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/7o6/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/7o6/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Packaged Goods › Ketchups and Spreads",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/0tl/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/0tl/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Packaged Goods › Breakfast Cereals",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/bx9/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/bx9/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Packaged Goods › Jam and Honey",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/j4e/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/j4e/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Packaged Goods › Cooking Sauces and Vinegar",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/wd7/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/wd7/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Packaged Goods › Baking Essentials",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/td1/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/u0u&p[]=facets.category[]=73z/u0u/td1/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Personal Care & Wellness › Soaps and Body Wash",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/sn6/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/sn6/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Personal Care & Wellness › Hair Care",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/vpw/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/vpw/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Personal Care & Wellness › Oral Care",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/2s3/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/2s3/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Personal Care & Wellness › Deos, Perfumes and Talcs",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/np3/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/np3/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Personal Care & Wellness › Creams, Lotions Skin Care",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/n3m/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/n3m/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Personal Care & Wellness › Kajal and Makeup",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/lzq/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/lzq/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Personal Care & Wellness › Sanitary Needs",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/tlj/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/tlj/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Personal Care & Wellness › Wellness and Common Pharma",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/07d/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/07d/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Personal Care & Wellness › Shaving Needs",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/nw3/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/nw3/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Baby Care › Diapers and Wipes",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/smb/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/smb/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Baby Care › Baby Food",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/2jj/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/2jj/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Baby Care › Baby Bath and Skin Care",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/m1f/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/njl&p[]=facets.category[]=73z/njl/m1f/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Fruits and Vegetables › Fruits",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/mk9&p[]=facets.category[]=73z/mk9/w9z/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/mk9&p[]=facets.category[]=73z/mk9/w9z/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Fruits and Vegetables › Vegetables",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/mk9&p[]=facets.category[]=73z/mk9/aiw/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/mk9&p[]=facets.category[]=73z/mk9/aiw/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Household Care › Detergents and Laundry",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/2z2/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/2z2/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Household Care › Utensil Cleaners",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/bdc/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/bdc/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Household Care › Floor and Other Cleaners",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/u3c/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/u3c/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Household Care › Repellents and Fresheners",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/qz9/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/qz9/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Household Care › Paper and Disposables",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/2wc/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/2wc/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Household Care › Basic Electricals",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/0s4/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/cwl&p[]=facets.category[]=73z/cwl/0s4/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Home & Kitchen › Kitchen Tools and Appliances",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/uyk&p[]=facets.category[]=73z/uyk/hho/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/uyk&p[]=facets.category[]=73z/uyk/hho/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Home & Kitchen › Cookware and Serveware",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/uyk&p[]=facets.category[]=73z/uyk/vdx/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/uyk&p[]=facets.category[]=73z/uyk/vdx/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Home & Kitchen › Home Utilities",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/uyk/sgh&p[]=facets.category[]=73z/uyk/sgh/lbh/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/uyk/sgh&p[]=facets.category[]=73z/uyk/sgh/lbh/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Home & Kitchen › Home Organisers",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/uyk/sgh&p[]=facets.category[]=73z/uyk/sgh/ib1/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/uyk/sgh&p[]=facets.category[]=73z/uyk/sgh/ib1/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Home & Kitchen › Bath and Bed Essentials",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/uyk&p[]=facets.category[]=73z/uyk/6f4/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/uyk&p[]=facets.category[]=73z/uyk/6f4/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Home & Kitchen › Hand Tools",
-      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/uyk/sgh&p[]=facets.category[]=73z/uyk/sgh/nlf/"
+      "uri": "/grocery/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z&p[]=facets.category[]=73z/uyk/sgh&p[]=facets.category[]=73z/uyk/sgh/nlf/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Electronics & Gadgets › Speakers & Earphones",
-      "uri": "/hyperlocal/Speakers%20nd%20Earphones/pr?sid=hloc%2F0039&marketplace=HYPERLOCAL&sort=discount"
+      "uri": "/hyperlocal/Speakers%20nd%20Earphones/pr?sid=hloc%2F0039&marketplace=HYPERLOCAL&sort=discount",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Electronics & Gadgets › Smartwatches & Wearables",
-      "uri": "/ajy/~cs-n07lff2ctz/pr?sid=ajy&marketplace=HYPERLOCAL&collection-tab-name=Smartwatches&sort=discount"
+      "uri": "/ajy/~cs-n07lff2ctz/pr?sid=ajy&marketplace=HYPERLOCAL&collection-tab-name=Smartwatches&sort=discount",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Electronics & Gadgets › Kitchen & Home Appliances",
-      "uri": "/j9e/abm/~cs-sg12jxivk6/pr?sid=j9e%2Cabm&marketplace=HYPERLOCAL&collection-tab-name=Appliances&sort=discount"
+      "uri": "/j9e/abm/~cs-sg12jxivk6/pr?sid=j9e%2Cabm&marketplace=HYPERLOCAL&collection-tab-name=Appliances&sort=discount",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Ice Cream & Desserts › Ice Creams & Desserts",
-      "uri": "/hyperlocal/IceCream-Desserts/pr?sid=hloc%2F0034&marketplace=HYPERLOCAL&sort=discount"
+      "uri": "/hyperlocal/IceCream-Desserts/pr?sid=hloc%2F0034&marketplace=HYPERLOCAL&sort=discount",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Ice Cream & Desserts › Sweets & Mithai",
-      "uri": "/hyperlocal/hloc/0806/pr?sid=hloc%2F0081%2F0806&marketplace=HYPERLOCAL&sort=discount"
+      "uri": "/hyperlocal/hloc/0806/pr?sid=hloc%2F0081%2F0806&marketplace=HYPERLOCAL&sort=discount",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Toys, Games & Sports › Toys & Games",
-      "uri": "/hyperlocal/Toys-Games/pr?sid=hloc%2F0028&marketplace=HYPERLOCAL&sort=discount"
+      "uri": "/hyperlocal/Toys-Games/pr?sid=hloc%2F0028&marketplace=HYPERLOCAL&sort=discount",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Toys, Games & Sports › Sports & Fitness",
-      "uri": "/hyperlocal/Sports-Fitness/pr?sid=hloc%2F0036&marketplace=HYPERLOCAL&sort=discount"
+      "uri": "/hyperlocal/Sports-Fitness/pr?sid=hloc%2F0036&marketplace=HYPERLOCAL&sort=discount",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Office and School Supplies",
-      "uri": "/grocery/office-school-supplies/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z,pyy&p[]=facets.category[]=73z&p[]=facets.category[]=73z/pyy/"
+      "uri": "/grocery/office-school-supplies/pr?marketplace=HYPERLOCAL&sort=discount&sid=73z,pyy&p[]=facets.category[]=73z&p[]=facets.category[]=73z/pyy/",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Fashion & Accessories",
-      "uri": "/hyperlocal/Fashion-Accessories/pr?sid=hloc%2F0026&marketplace=HYPERLOCAL&sort=discount"
+      "uri": "/hyperlocal/Fashion-Accessories/pr?sid=hloc%2F0026&marketplace=HYPERLOCAL&sort=discount",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Chicken, Meat & Fish",
-      "uri": "/hyperlocal/hloc/3106/pr?sid=hloc%2F7n35&marketplace=HYPERLOCAL&sort=discount"
+      "uri": "/hyperlocal/hloc/3106/pr?sid=hloc%2F7n35&marketplace=HYPERLOCAL&sort=discount",
+      "enabled": true,
+      "threshold": null
     },
     {
       "name": "Paan Corner & Refreshers",
-      "uri": "/hyperlocal/hloc/4901/pr?sid=hloc%2F0049%2F4901&marketplace=HYPERLOCAL&sort=discount"
+      "uri": "/hyperlocal/hloc/4901/pr?sid=hloc%2F0049%2F4901&marketplace=HYPERLOCAL&sort=discount",
+      "enabled": true,
+      "threshold": null
     }
   ],
   "schedule": {
@@ -420,6 +548,21 @@
     "cron": "35 0-19 * * *",
     "cron_utc": true,
     "timezone_offset_hours": 5.5,
-    "note": "GitHub Actions cron is always UTC. The control panel converts from your local time."
+    "note": "GitHub Actions cron is always UTC. The control panel converts from your local time.",
+    "days": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "n": 60,
+    "hour_min": 35,
+    "daily_h": 9,
+    "daily_m": 0,
+    "start_h": 0,
+    "end_h": 23
   }
 }
